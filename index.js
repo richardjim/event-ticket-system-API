@@ -1,16 +1,14 @@
-const {} = require("dotenv/config");
-const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const routes = require("./routes");
-const xmlparser = require("express-xml-bodyparser");
-// const fileupload = require("express-fileupload");
-// const CronServices = require("./services/CronService");
-const Sentry = require("@sentry/node");
-const swaggerJsdoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
-const { PrismaClient } = require("@prisma/client");
-// const { port } = require("./config");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import routes from "./routes/index.js";
+import xmlparser from "express-xml-bodyparser";
+import Sentry from "@sentry/node";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+import { PrismaClient } from "@prisma/client";
+import dotenv from "dotenv/config";
+
 
 const prisma = new PrismaClient();
 const app = express();
@@ -120,8 +118,10 @@ app.use((error, req, res, next) => {
   });
 });
 
-app.listen(port, () => {
+  app.listen(port, () => {
     console.log(`Server running on port ${port}`);
     console.log(`Swagger API Docs available at http://localhost:${port}/api-docs`);
-//   new CronServices();
-});
+  });
+
+export default app;
+
