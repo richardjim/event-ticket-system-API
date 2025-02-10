@@ -1,6 +1,6 @@
-const eventService = require("../services/eventService");
+import eventService from "../services/eventService.js";
 
-exports.initializeEvent = async (req, res) => {
+const initializeEvent = async (req, res) => {
   try {
     const { name, totalTickets } = req.body;
     const event = await eventService.initializeEvent(name, totalTickets);
@@ -10,7 +10,7 @@ exports.initializeEvent = async (req, res) => {
   }
 };
 
-exports.bookTicket = async (req, res) => {
+const bookTicket = async (req, res) => {
   try {
     const { eventId, userId } = req.body;
     const result = await eventService.bookTicket(eventId, userId);
@@ -20,7 +20,7 @@ exports.bookTicket = async (req, res) => {
   }
 };
 
-exports.cancelBooking = async (req, res) => {
+const cancelBooking = async (req, res) => {
   try {
     const { eventId, userId } = req.body;
     const result = await eventService.cancelBooking(eventId, userId);
@@ -30,20 +30,28 @@ exports.cancelBooking = async (req, res) => {
   }
 };
 
-exports.getEventStatus = async (req, res) => {
+const getEventStatus = async (req, res) => {
   try {
     const { eventId } = req.params;
-    const status = await eventService.getEventStatus(eventId);
+    const status = await eventService.getEventList(eventId);
     res.status(200).json(status);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-exports.getEvents = async (req,res) => {
+const getEvents = async (req,res) => {
     try {
        await eventService.getEventList();
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
+export default {
+    initializeEvent,
+    bookTicket,
+    cancelBooking,
+    getEventStatus,
+    getEvents,
+  };
