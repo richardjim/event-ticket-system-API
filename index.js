@@ -8,6 +8,7 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { PrismaClient } from "@prisma/client";
 import dotenv from "dotenv/config";
+const port = process.env.PORT || 3000;
 
 
 const prisma = new PrismaClient();
@@ -60,7 +61,6 @@ app.get("/health", (req, res) => {
   });
 });
 
-const port = process.env.PORT || 3000;
 
 const options = {
   definition: {
@@ -70,7 +70,7 @@ const options = {
       version: "1.0.0",
       description: "API Documentation for the Ticket Booking System",
       contact: {
-        name: "Support",
+        name: "Richard Iyevhobu",
         url: "",
         email: "",
       },
@@ -118,10 +118,10 @@ app.use((error, req, res, next) => {
   });
 });
 
-  app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
-    console.log(`Swagger API Docs available at http://localhost:${port}/api-docs`);
-  });
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+  console.log(`Swagger API Docs available at http://localhost:${port}/api-docs`);
+});
 
 export default app;
 
