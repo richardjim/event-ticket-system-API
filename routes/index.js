@@ -1,6 +1,6 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const eventController = require("../controllers/eventController");
+import eventController from "../controllers/eventController.js"; 
 
 /**
  * @swagger
@@ -118,4 +118,4 @@ router.post("/cancel", eventController.cancelBooking);
  */
 router.get("/status/:eventId", eventController.getEventStatus);
 
-module.exports = router;
+export default router;

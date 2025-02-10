@@ -13,14 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Event {
-  id              String     @id @default(uuid())
-  name            String
-  totalTickets    Int
+  id               String        @id @default(uuid())
+  name             String
+  totalTickets     Int
   availableTickets Int
-  bookings        Booking[]
-  waitingList     WaitingList[]
+  bookings         Booking[]
+  waitingList      WaitingList[]
 }
 
 model Booking {
@@ -30,7 +29,7 @@ model Booking {
   userId    String
   createdAt DateTime @default(now())
 
-  @@unique([eventId, userId]) 
+  @@unique([eventId, userId])
 }
 
 model WaitingList {
@@ -40,5 +39,5 @@ model WaitingList {
   userId    String
   createdAt DateTime @default(now())
 
-  @@unique([eventId, userId]) 
+  @@unique([eventId, userId])
 }

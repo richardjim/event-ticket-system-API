@@ -1,24 +1,24 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
-exports.createEvent = async (name, totalTickets) => {
+const createEvent = async (name, totalTickets) => {
   return await prisma.event.create({
     data: { name, totalTickets, availableTickets: totalTickets },
   });
 };
 
-exports.getEvents = async () => {
+const getEvents = async () => {
     return await prisma.event.findMany();
   };
-  
-exports.getEventById = async (eventId) => {
+
+const getEventById = async (eventId) => {
   return await prisma.event.findUnique({
     where: { id: eventId },
     include: { bookings: true, waitingList: true },
   });
 };
 
-exports.bookTicket = async (eventId, userId) => {
+const bookTicket = async (eventId, userId) => {
   return await prisma.$transaction(async (tx) => {
     const event = await tx.event.findUnique({ where: { id: eventId } });
     
@@ -39,13 +39,13 @@ exports.bookTicket = async (eventId, userId) => {
   });
 };
 
-exports.addToWaitingList = async (eventId, userId) => {
+const addToWaitingList = async (eventId, userId) => {
   return await prisma.waitingList.create({
     data: { eventId, userId },
   });
 };
 
-exports.cancelBooking = async (eventId, userId) => {
+const cancelBooking = async (eventId, userId) => {
   return await prisma.$transaction(async (tx) => {
     const booking = await tx.booking.findFirst({
       where: { eventId, userId },
@@ -74,7 +74,7 @@ exports.cancelBooking = async (eventId, userId) => {
   });
 };
 
-exports.getEventStatus = async (eventId) => {
+const getEventStatus = async (eventId) => {
   return await prisma.event.findUnique({
     where: { id: eventId },
     include: {
@@ -83,3 +83,13 @@ exports.getEventStatus = async (eventId) => {
     },
   });
 };
+
+export default {
+    getEventStatus,
+    createEvent,
+    cancelBooking,
+    addToWaitingList,
+    bookTicket,
+    getEventById,
+    getEvents
+}
